@@ -53,6 +53,9 @@ try {
 
      for($i=0;$i<$max;$i++){
         $z= $i+1;
+        //If a value is unique use it in a similar way as $z above or insert queries will 
+        //fail due to duplicate entry errors
+        //If a value is a string use function; $batchManager->convertToMySQLString($param);
         $values[0] = VALUE_FOR_COLUMN_A;
         $values[1] = VALUE_FOR_COLUMN_B;
         $values[2] = VALUE_FOR_COLUMN_N;
@@ -63,10 +66,6 @@ try {
     //Process your transactions
     $results = $batchManager->processBatchTransactions();
     print_r($results);
-
-    //Retrieve the list of records(these are the columns you set as setReturnColumns)
-    $success = $batchManager->getListOfInsertedRecords();
-    print_r($success);
 
 } catch (Exception $e) {
     echo "\nAn error occurred ' " . $e->getMessage() . " ' LINE " . __LINE__ . "\n\n";
