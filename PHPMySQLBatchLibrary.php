@@ -296,28 +296,22 @@ class PHPMySQLBatchLibrary
      * @param $count
      * @param $transactions
      */
+    /**
+     * @param $count
+     * @param $transactions
+     */
     private function push($link, $queryString, $transactionsBatch)
     {
+        $insert_ids = array();
         for ($i = 0; $i < count($transactionsBatch); $i++) {
-            $queryString .= $transactionsBatch[$i];
+            if ($link->query($transactionsBatch[$i]) ){
+                $insert_ids[$i]= $link->insert_id;
+                $results ["Success"] = $insert_ids;
+            } else {
+                $results ["Failed"] = $insert_ids;
+            }
         }
-        $queryString = implode(";", $transactionsBatch);
-        if (mysqli_multi_query($link, $queryString)) {
-            $i = 0;
-            do {
-                $i++;
-                if (!mysqli_more_results($link)) {
-                    break;
-                }
-            } while (mysqli_next_result($link));
-
-            $status = "SUCCESS";
-            $results ["Status"] = $status;
-        } else {
-            $status = "FAILED";
-            $results ["Status"] = $status;
-            $results ["Error"] = mysqli_error($link);
-        }
+        $link->close();
         return $results;
     }
 
