@@ -42,9 +42,6 @@ try {
     //Set columns you want to insert values into
     $batchManager->setColumns($columns);
 
-    //Set the columns that you want to get a return value
-    $batchManager->setReturnColumns($returnColumnValues);
-
     //Set the table that you want to use
     $batchManager->setTable($table);
 
