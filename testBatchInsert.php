@@ -18,10 +18,6 @@ try {
         'columnA','columnB'//Place column IDs here
     );
 
-    $returnColumnValues = array(
-        'valueA','valueA',//Place column iDs here
-    );
-
     $table = 'TABLE_NAME';
 
     $credentials = array(
